@@ -1,0 +1,739 @@
+{
+	"info": {
+		"_postman_id": "a697f6bf-cf55-44b6-886b-bcfafb5ba1ed",
+		"name": "Leap QE Technical Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17072417"
+	},
+	"item": [
+		{
+			"name": "Negative Scenarios",
+			"item": [
+				{
+					"name": "Create (empty body)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check response code",
+									"pm.test(\"Empty Body. Status code is 415\", function () {",
+									"  pm.response.to.have.status(415);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create (invalid token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check response code",
+									"pm.test(\"Invalid key. Status code is 400\", function () {",
+									"  pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"key\", \"invalid_key\")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"FirstName\": \"asdf\",\n    \"LastName\": \"A\",\n    \"DateOfBirth\": \"A\",\n    \"StartDate\": \"A\",\n    \"Department\": \"A\",\n    \"JobTitle\": \"A\",\n    \"Email\": \"A\",\n    \"Mobile\": \"A\",\n    \"Address\": \"A\",\n    \"BaseSalary\": \"A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read (Invalid ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check response code",
+									"pm.test(\"Invalid ID. Status code is 404\", function () {",
+									"  pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}/123",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (Invalid ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check response code",
+									"pm.test(\"Invalid ID. Status code is 404\", function () {",
+									"  pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}/123",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create (Invalid schema)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const invalidResponseJSONSchema = ",
+									"{",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"FirstName\": {",
+									"      \"type\": \"integer\" // This is wrong",
+									"    },",
+									"    \"LastName\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"DateOfBirth\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"StartDate\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"Department\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"JobTitle\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"Email\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"Mobile\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"Address\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"BaseSalary\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"_id\": {",
+									"      \"type\": \"string\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"FirstName\",",
+									"    \"LastName\",",
+									"    \"DateOfBirth\",",
+									"    \"StartDate\",",
+									"    \"Department\",",
+									"    \"JobTitle\",",
+									"    \"Email\",",
+									"    \"Mobile\",",
+									"    \"Address\",",
+									"    \"BaseSalary\",",
+									"    \"_id\"",
+									"  ]",
+									"}",
+									"",
+									"// Schema validation",
+									"pm.test(\"Invalid Schema validation\", function(){",
+									"    pm.response.to.not.have.jsonSchema(invalidResponseJSONSchema)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"FirstName\": \"asdf\",\n    \"LastName\": \"A\",\n    \"DateOfBirth\": \"A\",\n    \"StartDate\": \"A\",\n    \"Department\": \"A\",\n    \"JobTitle\": \"A\",\n    \"Email\": \"A\",\n    \"Mobile\": \"A\",\n    \"Address\": \"A\",\n    \"BaseSalary\": \"A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update (Invalid ID)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check response code",
+									"pm.test(\"Status code is 404\", function () {",
+									"  pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"FirstName\": \"B\",\n    \"LastName\": \"A\",\n    \"DateOfBirth\": \"A\",\n    \"StartDate\": \"A\",\n    \"Department\": \"A\",\n    \"JobTitle\": \"A\",\n    \"Email\": \"A\",\n    \"Mobile\": \"A\",\n    \"Address\": \"A\",\n    \"BaseSalary\": \"A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}/123",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}",
+								"123"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Positive Scenarios",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.globals.set(\"employeeId\", jsonData._id);",
+									"console.log(\"Created employee with ID: \" + jsonData._id)",
+									"",
+									"const responseJSONSchema = ",
+									"{",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"FirstName\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"LastName\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"DateOfBirth\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"StartDate\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"Department\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"JobTitle\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"Email\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"Mobile\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"Address\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"BaseSalary\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"_id\": {",
+									"      \"type\": \"string\"",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"FirstName\",",
+									"    \"LastName\",",
+									"    \"DateOfBirth\",",
+									"    \"StartDate\",",
+									"    \"Department\",",
+									"    \"JobTitle\",",
+									"    \"Email\",",
+									"    \"Mobile\",",
+									"    \"Address\",",
+									"    \"BaseSalary\",",
+									"    \"_id\"",
+									"  ]",
+									"}",
+									"",
+									"// Schema validation",
+									"pm.test(\"Schema validation\", function(){",
+									"    pm.response.to.have.jsonSchema(responseJSONSchema)",
+									"})",
+									"",
+									"// Check response code",
+									"pm.test(\"Status code is 201\", function () {",
+									"  pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"FirstName\": \"asdf\",\n    \"LastName\": \"A\",\n    \"DateOfBirth\": \"A\",\n    \"StartDate\": \"A\",\n    \"Department\": \"A\",\n    \"JobTitle\": \"A\",\n    \"Email\": \"A\",\n    \"Mobile\": \"A\",\n    \"Address\": \"A\",\n    \"BaseSalary\": \"A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJSONSchema = ",
+									"{",
+									"  \"type\": \"array\",",
+									"  \"items\": [",
+									"    {",
+									"      \"type\": \"object\",",
+									"      \"properties\": {",
+									"        \"_id\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"FirstName\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"LastName\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"DateOfBirth\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"StartDate\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"Department\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"JobTitle\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"Email\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"Mobile\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"Address\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"BaseSalary\": {",
+									"          \"type\": \"string\"",
+									"        }",
+									"      },",
+									"      \"required\": [",
+									"        \"_id\",",
+									"        \"FirstName\",",
+									"        \"LastName\",",
+									"        \"DateOfBirth\",",
+									"        \"StartDate\",",
+									"        \"Department\",",
+									"        \"JobTitle\",",
+									"        \"Email\",",
+									"        \"Mobile\",",
+									"        \"Address\",",
+									"        \"BaseSalary\"",
+									"      ]",
+									"    }",
+									"  ]",
+									"}",
+									"",
+									"pm.test(\"Schema validation\", function(){",
+									"    pm.response.to.have.jsonSchema(responseJSONSchema)",
+									"})",
+									"",
+									"// Check response code",
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check response code",
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}/64f14d9a4c636203e876fb41",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}",
+								"64f14d9a4c636203e876fb41"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read by Id  (For Chain request)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check response code",
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}/{{employeeId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}",
+								"{{employeeId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete (For Chain request)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check response code",
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}/{{employeeId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}",
+								"{{employeeId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check response code",
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"FirstName\": \"\",\n    \"LastName\": \"A\",\n    \"DateOfBirth\": \"A\",\n    \"StartDate\": \"A\",\n    \"Department\": \"A\",\n    \"JobTitle\": \"A\",\n    \"Email\": \"A\",\n    \"Mobile\": \"A\",\n    \"Address\": \"A\",\n    \"BaseSalary\": \"A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}/64f2c04d4c636203e8770025",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}",
+								"64f2c04d4c636203e8770025"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check response code",
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/{{key}}/{{resource}}/64f2c0aa4c636203e8770028",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"{{key}}",
+								"{{resource}}",
+								"64f2c0aa4c636203e8770028"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "https://crudcrud.com/api",
+			"type": "string"
+		},
+		{
+			"key": "resource",
+			"value": "employee",
+			"type": "string"
+		},
+		{
+			"key": "key",
+			"value": "73e8a2a855bb402d94952a2f0cc3ab25",
+			"type": "string"
+		}
+	]
+}

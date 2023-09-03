@@ -1,0 +1,26 @@
+[
+  {
+    "FirstName": "John",
+    "LastName": "Smith",
+    "DateOfBirth": "1st Jan 1990",
+    "StartDate": "1st Jan 2022",
+    "Department": "IT",
+    "JobTitle": "Program Manager",
+    "Email": "josh.smith@company.com",
+    "Mobile": "0400 000 000",
+    "Address": "100 Sydney Street, Sydney, 2000",
+    "BaseSalary": "A$80,000"
+  },
+    {
+    "FirstName": "Anna",
+    "LastName": "Robertson",
+    "DateOfBirth": "1st May 1987",
+    "StartDate": "21st March 2019",
+    "Department": "Business",
+    "JobTitle": "Business Manager",
+    "Email": "anna.robertson@company.com",
+    "Mobile": "0400 123 000",
+    "Address": "100 Sydney Street, Sydney, 2000",
+    "BaseSalary": "A$90,000"
+  }
+]
